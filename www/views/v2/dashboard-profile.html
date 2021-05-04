@@ -1,0 +1,118 @@
+		<div class="view-container-wm">
+			
+			<div class="view-dashboard" style="padding-top:0px;">
+			
+			
+				<div style="height:160px;padding-top:20px;">
+					<div style="text-align:center;"><img class="bn-profile-img" src="{{profilePicSrc}}" height="90"></div>
+					<div style="text-align:center;" class="bn-profile-title">{{profileName}}</div>
+					<!-- <div style="text-align:center;" class="bn-profile-location"><i class="fa fa-map-marker" aria-hidden="true" style="color:#000000;padding-right:10px;"></i>San Diego, CA</div> -->
+				</div>
+					
+				<div class="bn-dashboard-profile-vertbar">				
+					<!-- <img src="img/v2/cap-challenges.jpg" width="120">50&nbsp;|&nbsp;<img src="img/v2/cap-feedbacks.jpg" width="120">20 -->
+					<i class="fa fa-video-camera" aria-hidden="true" style="color:#000000;padding-right:10px;"></i>
+					<span class="bn-dashboard-vertbar-cap">Challenges:</span> {{intChallenges}} &nbsp;&nbsp;|&nbsp;&nbsp; 
+					<i class="fa fa-dollar" aria-hidden="true" style="color:#000000;padding-right:10px;"></i> 
+					<span class="bn-dashboard-vertbar-cap">Feedbacks:</span> {{intFeedbacks}}
+				</div>
+				
+				<div id="btn-coins" style="height:60px;text-align:center;padding-top:20px;">
+					<img ng-repeat="chresponse in chresponses" ng-click="showResponse(chresponse.user_video_id);" src="img/v2/coin.jpg" height="55">
+				</div>
+				
+				<div id="btn-heart" style="height:80px;text-align:center;padding-top:20px;">
+					<img src="img/v2/heart-btn.jpg" height="70" onClick="window.location='#feedbacks';">
+				</div>
+				
+				<div id="btn-challenge" style="height:80px;text-align:center;padding-top:20px;">
+					<div ng-if="hasChallenge==true"  class="bn-dashboard-profile-btn bn-btn-disabled">CHALLENGE</div>
+					<div ng-if="hasChallenge==false" class="bn-dashboard-profile-btn bn-btn-enabled" ng-click="showWeeklyChallenge();">CHALLENGE</div>
+				</div>
+				
+				
+			
+		</div>
+		
+		<!-- overlay -->	
+		<div id="tut-main" style="display:none;">
+			<div style="width:100%;height:100%;background-color:black;opacity:0.5;position:fixed;top:0px;left:0px;">
+			</div>	
+			
+			<div style="width:100%;height:100%;position:fixed;top:0px;left:0px;z-index:99999;" onClick="moveTut();">
+				<div id="tut-box" style="width:200px;height:80px;background-color:#ffffff;border:0px solid;border-radius:30px;top:20px;left:20px;position:relative;">
+					
+					<div id="tut-text" style="font-size:11px;color:black;text-align:center;width:100%;height:100%;padding:15px;box-sizing:border-box;">
+						Start by doing this week's challenge 
+					</div>
+					
+					<i id="tut-arrow" class="fa fa-arrow-down" style="position:absolute;top:80px;left:100px;color:white;font-size:30px;"></i>
+					
+				</div>
+			</div>
+		</div>
+
+		
+		<script>
+		
+			var intC=0;
+			function moveTut(){				
+				
+				if(intC==0){
+					var intT = $('#btn-challenge').offset().top;
+					var intL = ($(window).width() / 2) - 100;
+					changeTut("Start by doing this week's challenge",intT-90,intL,90,false);				
+				}
+
+				if(intC==1){
+					var intT = $('#btn-heart').offset().top;
+					var intL = ($(window).width() / 2) - 100;
+					changeTut("When you've done the challenge, people will be able to leave you personal feedback.<BR/>You'll find them here.",intT-90,intL,90,false);					
+				}				
+				
+				if(intC==2){
+					var intT = $('#btn-coins').offset().top;
+					var intL = ($(window).width() / 2) - 100;
+					changeTut("Click on any of the coins to give feedback to someone else who has done the challenge.",intT-90,intL,90,false);					
+				}			
+
+				if(intC==3){
+					var intT = $('#bn-bottom-bar').offset().top;
+					var intL = ($(window).width() / 2) - 100;
+					changeTut("You can also click here for the full list of people/coins to choose from.",intT-120,intL,90,false);					
+				}			
+				
+				if(intC>3){
+					hideTut();
+				}	
+				
+				intC++;
+				
+			}
+		
+			function changeTut(text,top,left,aleft, ahide){
+				$('#tut-text').html(text);
+				$('#tut-box').css("top",top+"px");
+				$('#tut-box').css("left",left+"px");
+				$('#tut-arrow').css("left",aleft+"px");
+				if(ahide==true){
+					$('#tut-arrow').css("display","none");
+				}else{
+					$('#tut-arrow').css("display","block");
+				}
+			}
+			
+			function hideTut(){
+				$('#tut-main').hide();
+			}
+			
+			function showTut(){
+				$('#tut-main').show();
+				intC=0;
+				moveTut();			
+			}
+			
+
+			
+		</script>
+		

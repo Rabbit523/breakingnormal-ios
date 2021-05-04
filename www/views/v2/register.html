@@ -1,0 +1,58 @@
+
+		
+		<div class="bn-view-container-wm">
+			<!-- <a href='#register'><img src="img/screen1.jpg" width="300px"></a> -->
+		<form name='frmRegister'>		
+		
+
+			<img src="img/v2/bn-logo.jpg" style="width:200px;padding-top:60px;">
+			
+			<div class="view-login" style="padding-top:70px;">
+				
+				
+				<div id="signup-cont">
+				
+					
+					<div class="bn-login-field">
+						<i class="fa fa-user" style="width:30px;font-size:20px;padding-right:10px;"></i>
+						<input type="text" name="name" ng-model="name"  placeholder="Name" required>
+					</div>
+					
+				
+					<div class="bn-login-field">
+						<i class="fa fa-envelope" style="width:30px;font-size:20px;padding-right:10px;"></i>
+						<input type="email" name="email" ng-model="email"  placeholder="Email Address" required>
+					</div>
+					
+
+					<div class="bn-login-field">
+						<i class="fa fa-lock" style="width:30px;font-size:25px;padding-right:10px;"></i>
+						<input type="password" name="passwordone" ng-model="passwordone"  placeholder="Password" required>
+					</div>
+					<div class="bn-login-field">
+						<i class="fa fa-lock" style="width:30px;font-size:25px;padding-right:10px;"></i>
+						<input type="password" name="passwordtwo" ng-model="passwordtwo"  placeholder="Re-enter Password" required>
+					</div>
+				
+				</div>				
+				
+				
+				
+				<div class="bn-login-field" style="padding-top:20px;">
+					<!-- <button class='bn-login-loginbtn' type="submit" onClick="window.location = '#dashboard';" target="_top">SIGN IN</button> -->
+					<button class="bn-login-loginbtn" ng-click="registerU()" type="submit" ng-disabled="frmRegister.name.$invalid || frmRegister.email.$invalid">SIGN UP</button>
+				</div>		
+				
+				
+				<div class="bn-login-field" style="padding-top:60px;">
+					<b><a href="#login">Login</a></b>
+				</div>
+				
+
+				<p style="font-size:12px;padding:30px;font-weight:300;margin-bottom:0px;">
+					By Signing in, you agree to our <br/> <a style="color:#005493;" href="http://breakingnormal.io/BreakingNormal-TermsAndConditions.pdf" target="_system">"Terms & Conditions"</a> and <a href="http://breakingnormal.io/BreakingNormal-PrivacyPolicy.pdf" style="color:#005493;" target="_system">"Privacy Policy"</a>
+				</p>
+				
+			</div>
+		</form>
+		</div>

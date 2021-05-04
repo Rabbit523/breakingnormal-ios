@@ -1,0 +1,20 @@
+	<div class="view-container-wm">
+			
+		
+		<div class='video-responses-container'>
+		
+			<div class='tribe-item' style="width:300px;padding:10px 0px 10px 0px;margin-right:auto;margin-left:auto;" ng-repeat="tribemember in tribemembers">
+				<img src='{{tribemember.profile_pic}}'>
+				<div class="tribe-item-displayname" style="width:115px;">{{tribemember.display_name}}</div>
+				
+				
+				<button ng-if="tribemember.enable_reply==1" ng-click="recordMessage(tribemember.user_id);" class="button-tribe-message"><i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;Message</button>
+
+				<button ng-if="tribemember.enable_reply==0" disabled class="button-tribe-message" style="opacity:0.2;"><i class="fa fa-video-camera" aria-hidden="true"></i>&nbsp;&nbsp;Message</button>
+				
+				
+			</div>
+			
+		</div>
+			
+	</div>

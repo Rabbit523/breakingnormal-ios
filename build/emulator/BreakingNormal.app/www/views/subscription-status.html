@@ -1,0 +1,39 @@
+	<div class="view-container-wm">
+	<form name='frmRegister'>
+		<div class="form-row">
+			<h1>Breaking Normal App Subscription </h1>
+		</div>
+	
+		<div class="form-row">
+			<p>Current Status: <b>ACTIVE</b></p>
+		</div>	
+		
+		<div class="form-row">
+			<p>
+			<b>Cancel Subscription</b><BR/>
+			Click on button to send cancellation request. <BR/>It may take upto 5 days to process your request.
+			</p>
+			<button class="button-register" onClick="cancelSubs();">Cancel Subscription</button>
+		</div>
+		
+		
+	</form>
+	</div>
+	
+	<script>
+
+	function cancelSubs(){
+		var userid = window.localStorage.getItem("user-id");
+		$.get("http://nad.as/tdo/services/subscribe.php?op=cancel&userid="+userid, function(result){	
+			 if(result=="success"){
+				alert("Your cancellation request has been sent.");
+			 	window.location="#dashboard";
+				return true;
+			 }else{
+				alert("Error processing your request.");
+			 }
+		});
+	}
+
+	
+	</script>

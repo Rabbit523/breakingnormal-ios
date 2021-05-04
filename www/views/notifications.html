@@ -1,0 +1,17 @@
+	<div class="view-container-wm">
+			
+		
+		<div class='video-responses-container'>
+		
+			<div class='tribe-item' ng-repeat="notification in notifications" ng-click="gotoNotification(notification.link);">
+				<img src='{{notification.profile_pic}}'>
+				<div class="tribe-item-displayname" style="width:60%;font-size:10px;padding-top:15px;">
+					{{notification.notification_text}}
+					<BR/><span style="font-size:9px;color:#cccccc;">{{notification.notification_date}}</span>
+				</div>
+								
+			</div>
+			
+		</div>
+			
+	</div>

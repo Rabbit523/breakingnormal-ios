@@ -1,0 +1,21 @@
+	<div class="view-container-wm">
+			
+		<div class='video-container' style="height:200px;">
+			<p style="padding: 30px 30px 0px 30px;font-size: 25px;margin: 0px;color: white;">{{challengeText}}</p>
+		</div>
+		
+		<div class='video-responses-container'>
+		
+			<h1>Responses</h1>
+			
+			<div class='video-responses-item' ng-repeat="videoresponse in videoresponses">
+				<!--
+				<img ng-if="videoresponse.is_authentic" src="img/isauth.png" class="video-responses-item-auth-badge">
+				-->
+				<img src='{{baseUrl + videoresponse.profile_pic}}' ng-click="showResponse(videoresponse.user_video_id);">
+				<div class="video-responses-item-caption">{{videoresponse.display_name}}</div>
+			</div>
+			
+		</div>
+			
+	</div>

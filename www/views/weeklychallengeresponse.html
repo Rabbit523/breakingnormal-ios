@@ -1,0 +1,67 @@
+	<div class="view-container-wm">
+			
+		<div class='video-container' style="height:300px;">
+			<video id='challenge-video-player' class="video-container-player" poster='img/blank.jpg' src='{{videoUrl}}' controls='true' video-ended video-loaded></video>
+			<div id='video-reload' style="display:none;color:white;padding-top:20px;width:90%;margin:auto;">
+			Problem playing the video? <a href='javascript:void()' style="font-size:14px;color:white;font-size:15px;" ng-click="reloadVideo();">Tap here to Reload</a><BR/>
+			<span style="font-size:10px;">If problem persists, please make sure you are connected to internet.</span>
+			</div>
+		</div>
+		
+		<div class='video-responses-container'>
+
+			<p ng-if="enableSharing==1">
+				<img src="img/facebook.png" style="width:140px;" ng-click="shareFb();">
+			</p>
+			
+			<p ng-if="boolShowTimerCaption==1">
+				You have <b style="font-size:30px;">{{strTimerCaptionBold}}</b> left to record feedback.
+			</p>
+			
+			<div>
+				<div class='video-responses-item'>
+					<img src='{{baseUrl + videoResponse.profile_pic}}'>
+					<div class="video-responses-item-caption">{{videoResponse.display_name}}</div>				
+				</div>
+				
+				<div class='video-responses-item' ng-if="boolShowRecordButton==1">
+					<img id='takeVideo' src='img/icon-record-stop.png' style="background-color:transparent;" width="70px" ng-click="startCapture();">
+					<div class="video-responses-item-caption">Feedback</div>
+				</div>
+				
+			</div>
+			
+			<!--
+			<div style="padding-bottom:20px;">
+				<div class='video-responses-item'>
+					<img id='takeVideo' src='img/icon-record-stop.png' width="70px" ng-click="startCapture();">
+					<div class="video-responses-item-caption">Feedback</div>
+				</div>
+				<div class='video-responses-item'>
+					<img id='backBtn' src='img/back_button.png'  ng-click="goBack();" style="width:65px;background-color:#ffffff;">
+					<div class="video-responses-item-caption">Go Back</div>					
+				</div>
+			</div>
+			-->
+			
+			<div>
+				<h1 ng-if="hasReplies">Feedbacks</h1>				
+				
+				<p ng-if="hasReplies" style="width:80%;padding-left:30px;">Locked feedbacks can be unlocked by leaving a feedback.</p>
+				
+				<div class='video-responses-item' ng-repeat="videoreply in videoreplies">
+					
+					<div ng-if="videoreply.is_locked==1" style="width:60px;height:60px;position:absolute;top:10px;left:10px;opacity:0.6;border-radius:50%;background-color:black;">
+						<img src='img/lock.png' style="width:40px;height:40px;padding-top:8px;background-color:transparent;border-radius:0px;" ng-Click="showChallenge(videoreply.challenge_video_id);">
+					</div>
+				
+					<img ng-if="videoreply.is_locked==1" src='{{baseUrl + videoreply.profile_pic}}' ng-Click="showChallenge(videoreply.challenge_video_id);">
+					<img ng-if="videoreply.is_locked==0" src='{{baseUrl + videoreply.profile_pic}}' ng-Click="showReply(videoreply.user_video_id);">
+					
+					<div class="video-responses-item-caption">{{videoreply.display_name}}</div>
+				</div>
+			</div>
+			
+		</div>
+			
+	</div>

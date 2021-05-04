@@ -1,0 +1,18 @@
+	<div class="view-container-wm">
+			
+		<div class='video-container' style="height:250px;">
+			<p style="padding: 50px 30px 0px 30px;font-size: 25px;margin: 0px;color: white;">{{challengeText}}</p>
+		</div>
+		
+		<div class='caption-container' id='timer-caption'>
+		{{strTimerCaption}}
+		<b style="font-size:35px;display:inline-block;">{{strTimerCaptionBold}}</b>		
+		</div>
+		
+		<div class='record-button-container' ng-hide="checkVideoButtonVisibility">
+			<img id='takeVideo' src='img/icon-record-stop.png' width="70px" ng-click="startCapture();">
+			<div class="record-button-container-caption">Respond</div>	
+		</div>
+			
+	</div>
+	

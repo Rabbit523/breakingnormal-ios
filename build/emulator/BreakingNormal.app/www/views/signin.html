@@ -1,0 +1,24 @@
+	<div class="view-container">
+	<form name='frmLogin'>
+		<div class="form-row">
+			<h1>Login to your Account</h1>
+		</div>
+	
+	
+		<div class="form-row">
+			<input type="email" name="email" ng-model="email"  placeholder="Email Address" required>
+		</div>
+		
+		<div class="form-row">
+			<input type="password" name="passwordone" ng-model="passwordone"  placeholder="Password" required>
+		</div>
+
+		<div class="form-row">
+			<button class="button-register" ng-click="loginU()" type="submit" ng-disabled="frmLogin.email.$invalid">Login</button>
+		</div>
+		
+		<p>
+			<a href='#login' class="headline-link">< Back to Home</a>
+		</p>
+	</form>
+	</div>

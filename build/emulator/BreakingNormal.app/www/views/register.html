@@ -1,0 +1,32 @@
+	<div class="view-container">
+	<form name='frmRegister'>
+		<div class="form-row">
+			<h1>Create An Account</h1>
+		</div>
+	
+		<div class="form-row">
+			<input type="text" name="name" ng-model="name" placeholder="Name" required>
+		</div>		
+		
+		<div class="form-row">
+			<input type="email" name="email" ng-model="email"  placeholder="Email Address" required>
+		</div>
+		
+		<div class="form-row">
+			<input type="password" name="passwordone" ng-model="passwordone"  placeholder="Password" required>
+		</div>
+		
+		<div class="form-row">
+			<input type="password" name="passwordtwo" ng-model="passwordtwo" placeholder="Re-enter Password" required>
+		</div>
+		
+		<div class="form-row">
+			<button class="button-register" ng-click="registerU()" type="submit" ng-disabled="frmRegister.name.$invalid || frmRegister.email.$invalid">Register</button>
+		</div>
+		
+		<p>
+			<a href='#signin' class="headline-link">Already Registered? Login Here</a>
+		</p>
+		
+	</form>
+	</div>

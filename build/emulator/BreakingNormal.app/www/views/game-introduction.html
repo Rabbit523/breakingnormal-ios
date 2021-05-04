@@ -1,0 +1,225 @@
+<div class="view-container-wm">
+
+	<div class="guidelines-container">
+		
+	
+		<div style="font-size:18px;font-family:Serif;text-align:left;">
+		
+		<h1>
+			GUIDELINES
+		</h1>
+		
+		<div class="guidelines-container-video" style="text-align:center;">
+			<video src="http://nad.as/tdo/data/guideline-videos/new-g2.mp4" poster="http://nad.as/tdo/data/guideline-videos/new-g2.png" controls="true"></video>
+		</div>
+		
+		<p style="line-height:25px;padding:0px 25px 0px 25px;text-align:left;">
+			This is a game of quick answers to inspire authentic responses that make your palms sweat. One person goes at a time moving in a counter-clockwise direction. On your turn press the shuffle button and you will have 30 seconds to answer. The timer is your friend here. You may think 30 seconds is way too short but we've found that this creative constraint is the most powerful way to get someone to bypass the head and speak straight from the heart. You must use the full 30 secs to express your answer, even if it's means just standing there saying "I don't know".
+		</p>
+		<p style="line-height:25px;padding:0px 25px 0px 25px;text-align:left;">
+			You'll notice a prompt to either "speak it", "sing it", "embody it" or "question master" with each question 
+		</p>
+		<p style="line-height:25px;padding:0px 25px 0px 25px;text-align:left;">
+			<b>SPEAK IT</b> means you speak your answer,
+			<b>SING IT</b> means you sing your answer,
+			<b>QUESTION MASTER</b> means that you create an awesome question for someone else to answer,
+			<b>EMBODY IT</b> means to embody your answer response without words... similar to charades.
+		</p>	
+	
+		<p style="line-height:25px;padding:0px 25px 0px 25px;text-align:left;">
+			<b>The rules are simple;</b><BR/>
+			<b>Be HONEST</b> - Answer with your most vulnerable truth - this game is about getting FUNcomfortable, so really go for it! Express yourself! But remember you only have 30 seconds, so use your time wisely - stop immediately when the time is up. To get the most out of this game, we suggest you avoid giving any feedback or commentary between turns until after the game has been completed to keep the momentum and energy flowing! 
+		</p>
+		
+
+
+		<p style="text-align:left;padding:0px 25px 0px 25px;text-align:left;">
+			<b>TWO IMPORTANT AGREEMENTS</b>
+		</p>
+		
+		<p style="line-height:25px;padding:0px 25px 0px 25px;text-align:left;">
+			There are two agreements all players in the game can make to create safe space for self-expression through confidentiality. Have everyone raise their hand to show their compliance in creating safe space before you begin.
+		</p>
+		
+		<ul style="font-weight:bold;">
+			<li style="padding-bottom:15px;">I agree not to share personal information that comes up during the game without consent.</li>
+			<li>I agree to be radically honest and share authentically.</li>
+		</ul>
+		
+			
+		<div style="font-size:20px;color:black;text-align:center;height:40px;width:150px;margin:30px auto 30px auto;background-color:#e5be7b;border: 3px solid black;border-radius:10px;" onClick="showPlayerCount();">
+				<div style='float:left;padding-left:30px;padding-top:5px;'><img src="img/dice.png" height=30/></div>
+				<div style='float:left;padding-top:7px;padding-left:7px;font-weight:bold;'>Start</div>
+		</div>
+		
+		</div>
+	
+	</div>
+	
+
+</div>
+
+
+		<div id='overlay-players' style="display:none;">
+		
+		<!-- Overlay -->
+		<div style="background-color:black;opacity:0.5;position:absolute;top:0px;left:0px;width:100%;height:100%;">
+		</div>
+		
+		<!-- Players Count View -->
+		<div id='view-players-count' style="position:absolute;top:0px;left:0px;width:100%;height:100%;">
+			<div style="width:270px;height:230px;position:relative;margin-left:auto;margin-right:auto;background-color:white;border-radius:10px;margin-top:180px;">
+				
+				<div style="position:absolute;top:5px;left:245px;" onClick="hideOverlay();"><img src="img/close.png" height=15/></div>
+				
+				<p style="text-align:center;font-size:20px;font-weight:bold;padding:20px 10px 0px 10px;">How many people are playing this game?</p>
+					
+				<div style="width:100%;margin-left:auto;margin-right:auto;height:50px;text-align:center;">
+					
+					<img id='sub-player' src='img/left.png' style="height:50px;" onClick="subPlayer();" />
+					<input id='players-count' onChange="changePlayerCount();" type='edit' value="2" style='width:50px;vertical-align:top;height:50px;border:1px solid black;font-size:30px;text-align:center;' />
+					<img id='add-player' src='img/right.png' style="height:50px;" onClick="addPlayer();" />
+					
+				</div>
+				
+				<div style="font-size:20px;color:black;text-align:center;height:40px;width:100px;margin:25px auto 10px auto;background-color:#e5be7b;border: 3px solid black;border-radius:10px;"  onclick='showGameTime();'>
+						<div style='padding-top:7px;font-weight:bold;'>Next</div>
+				</div>
+			
+			</div>
+		</div>
+		
+		<!-- Game Time View -->
+		<div id='view-game-time' style="display:none;position:absolute;top:0px;left:0px;width:100%;height:100%;">
+			<div style="width:270px;height:230px;position:relative;margin-left:auto;margin-right:auto;background-color:white;border-radius:10px;margin-top:180px;">
+				
+				<div style="position:absolute;top:5px;left:245px;" onClick="hideOverlay();"><img src="img/close.png" height=15/></div>
+				
+				<p style="text-align:center;font-size:20px;font-weight:bold;padding:20px 10px 0px 10px;">Please select total <br/> Game Time:</p>
+					
+				<div style="width:100%;margin-left:auto;margin-right:auto;height:50px;text-align:center;">
+					
+					<SELECT name='select-game-time' id='select-game-time' style="font-size: 20px;height: 50px;width: 150px;text-align: center;border: 1px solid black;padding: 10px;">
+						<option value='9'>10 Minutes</option>
+						<option value='19'>20 Minutes</option>
+						<option value='29'>30 Minutes</option>
+						<option value='39'>40 Minutes</option>
+						<option value='49'>50 Minutes</option>
+						<option value='59'>60 Minutes</option>
+					</SELECT>
+					
+				</div>
+				
+				<div style="font-size:20px;color:black;text-align:center;height:40px;width:100px;margin:25px auto 10px auto;background-color:#e5be7b;border: 3px solid black;border-radius:10px;"  onclick='showAddPlayer();'>
+						<div style='padding-top:7px;font-weight:bold;'>Next</div>
+				</div>
+			
+			</div>
+		</div>
+		
+		
+		
+		<!-- Add Player -->
+		<div id='view-players-add' style="display:none;position:absolute;top:0px;left:0px;width:100%;height:100%;">
+			<div style="width:270px;height:230px;position:relative;margin-left:auto;margin-right:auto;background-color:white;border-radius:10px;margin-top:180px;">
+				
+				<div style="position:absolute;top:5px;left:245px;" onClick="hideOverlay();"><img src="img/close.png" height=15/></div>
+				
+				<p style="text-align:center;font-size:20px;font-weight:bold;padding:20px 10px 0px 10px;">Enter name for <br/> Player # <span id='current-player'></span></p>
+					
+				<div style="width:100%;margin-left:auto;margin-right:auto;height:50px;text-align:center;">
+					
+					<input id='player-name' type='edit' value="" style='width:150px;height:50px;vertical-align:top;border:1px solid black;font-size:30px;text-align:center;' />
+					
+				</div>
+				
+				<div style="font-size:20px;color:black;text-align:center;height:40px;width:100px;margin:25px auto 10px auto;background-color:#e5be7b;border: 3px solid black;border-radius:10px;"  onclick='showNextPlayer();'>
+						<div id='players-add-button' style='padding-top:7px;font-weight:bold;'>Next</div>
+				</div>
+			
+			</div>
+		</div>		
+		
+		</div>
+		
+
+<script>
+	var intPlayersCount=2;
+	function subPlayer(){
+		if (intPlayersCount>2){
+			intPlayersCount--;
+		}
+		document.getElementById('players-count').value = intPlayersCount;
+	}
+	function addPlayer(){
+		if (intPlayersCount<20){
+			intPlayersCount++;
+		}
+		document.getElementById('players-count').value = intPlayersCount;
+	}
+	
+	function changePlayerCount(){
+		intPlayersCount=document.getElementById('players-count').value;	
+		if(intPlayersCount<2){
+			intPlayersCount=2;
+		}
+	}
+
+	function showPlayerCount(){
+		window.scrollTo(0,0);
+		document.getElementById('overlay-players').style.display='block';
+		document.getElementById('view-players-count').style.display='block';
+		document.getElementById('view-players-add').style.display='none';
+	}
+	
+	function showGameTime(){
+		document.getElementById('view-players-count').style.display='none';
+		document.getElementById('view-game-time').style.display='block';
+	}
+	
+	function showAddPlayer(){
+		document.getElementById('view-game-time').style.display='none';
+		document.getElementById('view-players-add').style.display='block';
+		document.getElementById('current-player').innerHTML = intCurrentPlayer;
+	}
+	
+	function hideOverlay(){
+		document.getElementById('overlay-players').style.display='none';
+	}
+	
+	var intCurrentPlayer=1;
+	var arrPlayers=[];
+	function showNextPlayer(){
+		
+		//data validation
+		if(document.getElementById('player-name').value.length == 0){
+			return false;
+		}		
+		
+		if(intCurrentPlayer == (intPlayersCount -1)){
+			//finish and start game
+			document.getElementById('players-add-button').innerHTML = "Done";
+		}		
+		
+		var strPlayerName = document.getElementById('player-name').value;
+		//alert(strPlayerName);
+		arrPlayers[intCurrentPlayer-1] =strPlayerName;
+		document.getElementById('player-name').value='';
+		
+		intCurrentPlayer++;		
+		
+		document.getElementById('current-player').innerHTML = intCurrentPlayer;
+		if(intCurrentPlayer > intPlayersCount){
+			//finish and start game
+			//alert(JSON.stringify(arrPlayers));
+			window.localStorage.setItem("players",JSON.stringify(arrPlayers));
+			window.localStorage.setItem("gametime",document.getElementById('select-game-time').value);
+			gotoGame();
+			return false;
+		}
+	}
+	//Navigation
+	function gotoGame(){
+		window.location = '#game';
+	}
+</script>

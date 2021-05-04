@@ -1,0 +1,30 @@
+	<div class="view-container-wm">
+			
+		<div class='video-container'>
+			<video id='challenge-video-player' class="video-container-player" poster='img/blank.jpg' src='{{videoUrl}}' controls='true' video-ended video-loaded></video>
+		</div>
+		
+		<div class='video-responses-container'>
+			
+			<div>
+				<div class='video-responses-item'>
+					<img src='{{baseUrl + videoResponse.profile_pic}}'>
+					<div class="video-responses-item-caption">{{videoResponse.display_name}}</div>				
+				</div>
+			</div>
+			
+			<div style="padding-bottom:20px;">
+				<div class='video-responses-item'>
+					<img id='backBtn' ng-click="goBack();" src='img/back_button.png' style="width:65px;background-color:#ffffff;">
+					<div class="video-responses-item-caption">Go Back</div>					
+				</div>
+				<div class='video-responses-item' ng-if="enableReply==1">
+					<img id='takeVideo' src='img/icon-record-stop.png' width="70px" ng-click="recordMessage(messageUserId);" style="background-color:transparent;">
+					<div class="video-responses-item-caption">Reply</div>
+				</div>
+			</div>
+			
+			
+		</div>
+			
+	</div>

@@ -1,0 +1,190 @@
+	<style>
+	.bn-game-intro-div{
+		padding:20px 10px;
+	}
+	select{
+		width:260px;
+		height:50px;
+	}
+	input{
+		width:220px;
+		height:50px;
+	}
+	.group-item{
+		padding-bottom:10px;
+	}
+	#group-wrapper{
+		vertical-align:middle;
+	}
+	#group-wrapper img{
+		vertical-align:middle;
+		width:30px;
+		height:30px;
+		padding-left:5px;
+	}
+	</style>
+
+		<div class="view-container-wm">
+			
+			<div class="view-dashboard" style="padding-top:0px;" id="swipezone" onClick="moveSlide('up');">
+					
+				<div class="bn-game-intro-div">
+					<p style="font-weight:bold;text-align:left;border-bottom:1px solid #f8c923;">
+					Select from existing group or enter all players' names
+					</p>
+					<SELECT id="group-list" name="group-list" onChange="changeGroup();">
+						<OPTION value="0">Select an existing Group</OPTION>
+					</SELECT>
+				</div>
+				
+				<div id="group-wrapper">
+						<div class="group-item" id="group-item-1">
+							<INPUT type="edit" name="group-player-1" id="group-player-1"><img src="img/v2/delete.png" onClick="deletePlayer(1);">
+						</div>
+				</div>
+
+				<div class="bn-game-intro-div">
+					<button class="bn-dashboard-profile-btn bn-btn-enabled" name="add-player" id="add-player" value="add" onClick="addPlayer();">+ Add Player</button>
+				</div>
+
+				<div class="bn-game-intro-div">
+					<p style="font-weight:bold;text-align:left;border-bottom:1px solid #f8c923;">
+					Select Game Time
+					</p>
+					<SELECT id="game-time" name="game-time" onChange="">
+						<option value='9'>10 Minutes</option>
+						<option value='19'>20 Minutes</option>
+						<option value='29'>30 Minutes</option>
+						<option value='39'>40 Minutes</option>
+						<option value='49'>50 Minutes</option>
+						<option value='59'>60 Minutes</option>
+					</SELECT>
+				</div>
+				
+				<div class="bn-game-intro-div">
+					<button  class="bn-dashboard-profile-btn bn-btn-enabled" name="save-group" id="save-group" value="save" onClick="saveGroup();" style="height:50px;width:250px;">Save & Start Game</button>
+				</div>	
+				
+			</div>
+			
+		</div>
+		
+		
+		<script>
+			var intPCount = 1;
+			var intGCount = window.localStorage.getItem("gcount");
+			var boolPlayerAdded=true;
+			
+			if(intGCount==null){
+				intGCount=0;
+			}
+			//alert(intGCount);
+			
+			function addPlayer(){
+				intPCount++;
+				$('#group-wrapper').append(
+					'<div class="group-item" id="group-item-'+intPCount+'"><INPUT type="edit" name="group-player-'+intPCount+'" id="group-player-'+intPCount+'"><img src="img/v2/delete.png" onClick="deletePlayer('+intPCount+');"></div>'
+				);
+				boolPlayerAdded=true;
+			}
+			
+			function deletePlayer(id){
+				$('#group-item-'+id).remove();
+				//intPCount--;
+			}
+			
+			function changeGroup(){
+				
+			}
+			
+			function loadGroups(){
+				var strGName = "";
+				var strPNames="";
+				for(var i=1;i<=intGCount;i++){
+					strGName = window.localStorage.getItem("gn"+i);
+					strPNames = window.localStorage.getItem("gnp"+i);
+					$('#group-list').append("<option value='"+i+"'>"+strGName+"</option>");
+				}
+				boolPlayerAdded=false;
+			}
+			
+			function loadGroupPlayers(id){
+			
+				if(id<1){return false;}
+				
+				var strPNames = window.localStorage.getItem("gnp"+id);
+				var arrP = strPNames.split(",");
+				intPCount=1;
+				$('#group-wrapper').html("");
+				for (var i=0;i<arrP.length;i++){
+					if(arrP[i].length>1){
+						 $('#group-wrapper').append(
+							'<div class="group-item" id="group-item-'+intPCount+'"><INPUT type="edit" name="group-player-'+intPCount+'" id="group-player-'+intPCount+'" value="'+arrP[i]+'"><img src="img/v2/delete.png" onClick="deletePlayer('+arrP[i]+');"></div>'
+						 );
+						 intPCount++;
+					 }
+				}
+			}
+			
+			function saveGroup(){
+				if(boolPlayerAdded==true){
+					navigator.notification.prompt("Please enter the group name.", saveGroupStart, "Breaking Normal");
+				}else{
+					loadGame();
+				}
+			}
+			
+			function saveGroupStart(data){
+			
+				if(data.buttonIndex>1){return false;}
+				
+				var strGName=data.input1;
+				
+				var arrPlayer;
+				intGCount++;
+				var strPNames="";
+				
+				for(var i=1;i<=intPCount;i++){
+					if($('#group-item-'+i).length){
+						//alert();
+						strPNames += $('#group-player-'+i).val() + ",";
+					}
+				}
+				
+				//save to localStorage
+				window.localStorage.setItem("gcount",intGCount); 
+				window.localStorage.setItem("gn"+intGCount, strGName);
+				window.localStorage.setItem("gnp"+intGCount, strPNames);
+				
+				loadGame();
+			}
+			
+			function loadGame(){
+				var arrPlayers=[]; 
+				var j=0;
+				for(var i=1;i<=intPCount;i++){
+					if($('#group-item-'+i).length){
+						//alert();
+						arrPlayers[j] = $('#group-player-'+i).val();
+						j++;
+					}
+				}
+				window.localStorage.setItem("players",JSON.stringify(arrPlayers));
+				window.localStorage.setItem("gametime",document.getElementById('game-time').value);
+				//load game view
+				//alert('game loaded');
+				window.location = "#game";
+			}
+			
+			$(document).ready(function(){
+				
+				loadGroups();
+			
+				$("#group-list").change(function(){
+					loadGroupPlayers($(this[this.selectedIndex]).val());
+				});		
+				
+			});
+
+		</script>
+		

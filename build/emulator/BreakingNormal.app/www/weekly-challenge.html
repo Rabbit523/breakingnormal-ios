@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- This is a wide open CSP declaration. To lock this down for production, see below. -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *" />
+    <!-- Good default declaration:
+    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+        * Enable inline JS: add 'unsafe-inline' to default-src
+        * Enable eval(): add 'unsafe-eval' to default-src
+    * Create your own at http://cspisawesome.com
+    -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *" /> -->
+
+    <link rel="stylesheet" type="text/css" href="css/weekly-challenge.css" />
+	
+	<!-- sidemenu style -->
+	<link rel="stylesheet" type="text/css" href="css/side-menu.css" />
+	<link rel="stylesheet" href="js/sidr/stylesheets/jquery.sidr.dark.css">
+	
+    <title>Weekly Challenge</title>
+</head>
+
+<body>
+
+	<!-- sidemenu -->
+	<div id='side-menu'></div>
+
+    <div class="main-container">
+	
+		<div class='video-container'>
+			<video id='challenge-video-player' src='http://nad.as/tdo/data/challenge-videos/1.mp4' controls='true' style='width:80%;height:300px;'></video>
+		</div>
+		
+		<div class='caption-container' id='timer-caption'>
+		Tap on play button to watch weekly challenge!
+		</div>
+
+		<div class='record-button-container'>
+			<img id='takeVideo' src='img/icon-record-stop.png' width="70px" onClick="startCapture();">
+		</div>
+		
+    </div>
+	
+	
+	<!-- all js -->
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>	
+	<script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+	<script src="js/app.js"></script>
+    <script type="text/javascript">
+        app.initialize();
+    </script>
+
+	
+	<script type='text/javascript'>
+	
+		document.getElementById('challenge-video-player').addEventListener('ended',myHandler,false);
+		function myHandler(e) {
+			document.getElementById('timer-caption').innerHTML = "You have <span id='timer-secs'>120</span> Seconds to record a response!";
+			startChallengeTimer();
+		}
+		
+		
+		var intChallengeTimerCount=120;
+		var objChallengeTimer;
+		function startChallengeTimer(){
+			objChallengeTimer = setInterval(function(){
+				document.getElementById('timer-secs').innerHTML = intChallengeTimerCount;
+				intChallengeTimerCount--;
+				if(intChallengeTimerCount<0){
+					clearInterval(objChallengeTimer);
+				}
+			}, 1000);
+		}	
+	</script>
+	
+	<script>
+	
+	function startCapture(){
+		navigator.device.capture.captureVideo(captureSuccess, captureError, {limit: 1, duration: 60});
+	}
+
+	function captureError(e) {
+		console.log("capture error: "+JSON.stringify(e));
+	}
+
+	function captureSuccess(mediaFiles) {
+        var i, len;
+        for (i = 0, len = mediaFiles.length; i < len; i += 1) {
+            uploadFile(mediaFiles[i]);
+        }
+	}
+	
+	function uploadFile(mediaFile) {
+		
+		var ft = new FileTransfer(),
+			path = mediaFile.fullPath,
+			name = mediaFile.name;
+		var options = new FileUploadOptions();
+		options.fileKey="file";
+		options.mimeType = "video/mpeg";
+		options.fileName = name;
+		options.chunkedMode = false;
+		
+		//get user id
+		var intUserId = window.localStorage.getItem("user-id");
+		
+		//get challenge id
+		var intChId = 1;
+
+		ft.upload(path,
+			"http://nad.as/tdo/services/upload-video.php?chid="+intChId+"&usrid="+intUserId,
+			function(result) {
+				console.log('Upload success: ' + result.responseCode);
+				console.log(result.bytesSent + ' bytes sent');
+				console.log('response:'+result.response);
+
+				//set challenge id
+				window.localStorage.setItem("challenge-id", "1");
+				//show next view
+				window.location='weekly-challenge-videos.html';
+				return true;
+				
+			},
+			function(error) {
+				console.log('Error uploading file ' + path + ': ' + error.code);
+			},
+			options);
+		
+			
+	}
+	</script>
+	
+	
+	<!-- Sidr menu -->
+    <!-- Include the Sidr JS -->
+    <script src="js/sidr/jquery.sidr.js"></script>
+    <!-- load sidemenu -->
+    <script>
+
+    $(document).ready(function () {
+		loadView('sidemenu','side-menu', function(){
+		
+			  //change caption
+			  document.getElementById('side-menu-text').innerHTML = "WEEKLY CHALLENGE";
+			  
+			  $('#side-menu-link').sidr({
+				timing: 'ease-in-out',
+				speed: 500
+			  });
+			
+
+			$( window ).resize(function () {
+			  $.sidr('close', 'sidr');
+			});
+
+			$('.smooth').click(function () {
+			  var target = $(this.hash);
+
+			  $.sidr('close', 'sidr');
+			  $('html,body').animate({
+				scrollTop: target.offset().top
+			  }, 700);
+			});
+		});
+	});
+    </script>
+	
+</body>
+
+</html>

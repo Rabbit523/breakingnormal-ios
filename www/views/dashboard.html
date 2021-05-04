@@ -1,0 +1,78 @@
+		<div class="view-container-wm">
+			
+			<div class="view-dashboard" style="padding-top:20px;">
+				
+				
+				<!--
+				<p class='dashboard-profile-caption'>
+					{{profileName}}
+				</p>
+				-->
+				
+				<div style="height:100px;width:250px;margin:auto;">
+					
+					<!--<div style="float:left;width:125px;height:80px;padding-top:20px;">
+						<img class="dashboard-profile-pic" src="{{profilePicSrc}}" >
+
+						<div style="display:inline-block;width:125px;height:80px;text-align:left;">
+							<p class='dashboard-profile-caption'>
+								Daniel
+							</p>
+						</div>
+						
+					</div>-->
+					
+					<div style="float:left;width:125px;height:100px;padding-top:20px;">					
+						
+
+						
+						<!--<div style="float:left;width:105px;height:80px;text-align:left;line-height:20px;">
+
+							<i class="fa fa-video-camera" aria-hidden="true" style="color:#cd4341;"></i>&nbsp;&nbsp;Completed:<Br/>
+							<i class="fa fa-heart" aria-hidden="true" style="color:#cd4341;"></i>&nbsp;&nbsp;Badges:<Br/>
+							<i class="fa fa-reply" aria-hidden="true" style="color:#cd4341;"></i>&nbsp;&nbsp;Feedbacks:				
+						</div>
+						
+						<div style="float:left;width:20px;height:80px;text-align:left;line-height:20px;">
+							1<Br/>
+							3<Br/>
+							3
+						</div>-->
+						
+					
+					</div>
+					
+
+					
+				</div>
+				
+
+				<div ng-if="hasNotifications==1" style="height:50px;width:240px;margin:auto;padding-bottom:20px;padding-top:20px;color:black;font-size:13px;"  onClick="window.location = '#notifications';">
+					<div style="float:left;"><img src="img/notifications.png" style="width:45px;padding-right:15px;"></div>
+					<div style="float:left;"><p> You have a new notification. </p></div>
+				</div>
+				
+				<div ng-if="hasNotifications==0" style="height:35px;width:240px;margin:auto;font-size:13px;">
+				
+				</div>
+				
+				<div class='dashboard-button-container'>
+					<img src="img/dashboard-game-button.png" style="max-width:220px;width:220px;" onClick="window.location = '#gameintro';">
+					<!--
+					<img src="img/dashboard-challenge-button5.png" onClick="window.location = '#weeklychallenge';">
+					-->
+					<!--<img src="img/dashboard-challenge-button5.png" ng-click="showWeeklyChallenge();">
+					<img src="img/dashboard-guidelines-high.jpg" onClick="window.location = '#guidelines';">
+					<img src="img/dashboard-tribe-high.jpg" onClick="window.location = '#tribe';">
+					<img src="img/dashboard-messages.jpg" onClick="window.location = '#messages';">-->
+					<!--
+					<button class="dashboard-button dashboard-button-wc" onClick="window.location = '#weeklychallenge';">Weekly Challenge</button>
+					<button class="dashboard-button dashboard-button-tg">The Guildelines</button>
+					<button class="dashboard-button dashboard-button-mp">My Profile</button>
+					<button class="dashboard-button dashboard-button-so">Sign Out</button>
+					-->
+				</div>
+				
+			</div>
+			
+		</div>

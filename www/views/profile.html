@@ -1,0 +1,20 @@
+	<div class="view-container">
+	<form name='frmLogin'>
+		<div class="form-row">
+			<h1>Change your Profile</h1>
+		</div>
+	
+	
+		<div class="form-row">
+			<input type="email" name="email" ng-model="email"  placeholder="Email Address" required>
+		</div>
+		
+		<div class="form-row">
+			<input type="password" name="passwordone" ng-model="passwordone"  placeholder="Password" required>
+		</div>
+
+		<div class="form-row">
+			<button class="button-register" ng-disabled="frmLogin.email.$invalid">Change Password</button>
+		</div>
+	</form>
+	</div>

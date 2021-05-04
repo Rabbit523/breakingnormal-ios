@@ -1,0 +1,134 @@
+	<div class="view-container-wm">
+	<form name='frmRegister'>
+		<div class="form-row">
+			<h1>Breaking Normal App Subscription </h1>
+			<p><b>Your trial has expired.</b></p>
+			<p><b>Subscribe for $11.01 / Month</b></p>
+		</div>
+	
+		
+		<div class="form-row">
+			<input type="text" name="cc-name" id="cc-name" ng-model="name" placeholder="Name on Card" required>
+		</div>
+		
+		
+		<div class="form-row">
+			<input type="email" name="email" id="email" ng-model="email"  placeholder="Email Address" required>
+		</div>
+		
+		
+		<div class="form-row">
+			<input type="number" inputmodel="numeric" name="cc" id="cc" ng-model="cc"  placeholder="Card Number" required>
+		</div>
+
+		<div class="form-row">
+			
+			<input type="number" inputmodel="numeric" name="cc-exp-month" id="cc-exp-month" ng-model="ccExpM" placeholder="Expiry(MM)" style="width:100px;" required>
+			<input type="number" inputmodel="numeric" name="cc-exp-year" id="cc-exp-year" ng-model="ccExpY" placeholder="Expiry(YYYY)" style="width:130px;" required>
+			
+			<!--
+			<SELECT name="cc-exp-month" id="cc-exp-month" placeholder="Expiry(MM)">
+				<OPTION value="">Expiry(MM)</OPTION>
+				<OPTION value="01">01</OPTION>
+				<OPTION value="02">02</OPTION>
+				<OPTION value="03">03</OPTION>
+				<OPTION value="04">04</OPTION>
+				<OPTION value="05">05</OPTION>
+				<OPTION value="06">06</OPTION>
+				<OPTION value="07">07</OPTION>
+				<OPTION value="08">08</OPTION>
+				<OPTION value="09">09</OPTION>
+				<OPTION value="10">10</OPTION>
+				<OPTION value="11">11</OPTION>
+				<OPTION value="12">12</OPTION>
+			</SELECT>
+			<SELECT name="cc-exp-year" id="cc-exp-year" placeholder="Expiry(YYYY)">
+				<OPTION value="">Expiry(YYYY)</OPTION>
+				<OPTION value="2017">2017</OPTION>
+				<OPTION value="2018">2018</OPTION>
+				<OPTION value="2019">2019</OPTION>
+				<OPTION value="2020">2020</OPTION>
+				<OPTION value="2021">2021</OPTION>
+				<OPTION value="2022">2022</OPTION>
+				<OPTION value="2023">2023</OPTION>
+				<OPTION value="2024">2024</OPTION>
+				<OPTION value="2025">2025</OPTION>
+				<OPTION value="2026">2026</OPTION>
+				<OPTION value="2027">2027</OPTION>
+				<OPTION value="2028">2028</OPTION>
+				<OPTION value="2029">2029</OPTION>
+				<OPTION value="2030">2030</OPTION>
+			</SELECT>
+			-->
+		</div>
+		
+		<div class="form-row">
+			<input type="number" inputmodel="numeric" name="cc-csv" id="cc-csv" ng-model="ccCsv"  placeholder="Security Code" required>
+		</div>
+		
+		<div class="form-row">
+			<input type="number" inputmodel="numeric" name="cc-zip" id="cc-zip" ng-model="ccZip"  placeholder="ZIP/Postal Code" required>
+		</div>
+		
+		
+		<div class="form-row">
+			<button class="button-register" onClick="validateCC();" ng-disabled="frmRegister.name.$invalid">Subscribe</button>
+		</div>
+		
+		
+	</form>
+	</div>
+	
+	<script>
+	try{
+		//cordova.plugins.stripe.setPublishableKey('pk_test_P9UtZzT8Vpzzkfwnc41ACToV'); //test keygen
+		cordova.plugins.stripe.setPublishableKey('pk_live_lnCvrUBXEFVSDjnDB9aJ50T4');
+	}catch(ex){
+		console.log('Stripe Not Initialized. Exception thrown');
+	}
+
+	function validateCC(){
+		var card = {
+		  number: document.getElementById('cc').value, // 16-digit credit card number
+		  expMonth: document.getElementById('cc-exp-month').value, // expiry month
+		  expYear: document.getElementById('cc-exp-year').value, // expiry year
+		  cvc: document.getElementById('cc-csv').value, // CVC / CCV
+		  name: document.getElementById('cc-name').value, // card holder name (optional)
+		  postalCode: document.getElementById('cc-zip').value // Postal Code / Zip Code (optional)
+		};
+		
+		window.scrollTo(0, 0);
+		$('#loading-screen').show();
+		
+		cordova.plugins.stripe.createCardToken(card, eventValidCC, eventInvalidCC);
+	
+	}
+	
+	function eventValidCC(tokenId){
+		console.log('Got card token! '+ tokenId.id);
+		var userid = window.localStorage.getItem("user-id");
+		var strEmail = document.getElementById('email').value;
+		
+		$.get("http://nad.as/tdo/services/subscribe.php?token="+tokenId.id+"&userid="+userid+"&email="+strEmail, function(result){	
+			 
+			 //hide uploading screen
+			 $('#loading-screen').hide();
+		
+			 if(result=="success"){
+				navigator.notification.alert("Thank you for subscribing.",function(){},"Breaking Normal");
+			 	window.location="#dashboard";
+				return true;
+			 }else{
+				navigator.notification.alert("Your credit card details are incorrect. Please enter a valid credit card to subscribe.",function(){},"Breaking Normal");
+			 }
+		});
+	}
+	
+	function eventInvalidCC(errorMessage){
+		//console.log('Error getting card token ' + errorMessage);
+		navigator.notification.alert(errorMessage,function(){},"Breaking Normal");
+		//hide uploading screen
+		$('#loading-screen').hide();
+	}
+	
+	</script>

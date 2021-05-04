@@ -1,0 +1,39 @@
+		<div class="view-container-wm" style="margin-bottom:150px;">
+			
+			<div class="view-dashboard" style="padding-top:0px;">
+			
+			
+				<div ng-if="hide==true" style="height:120px;padding-top:10px;">
+					<div style="text-align:center;"><img src="img/v2/coin.jpg" height="90"></div>
+					<div style="text-align:center;" class="bn-profile-title bn-text-blur">{{videoResponse.display_name}}</div>
+				</div>
+				
+				<div ng-if="hide==false" style="height:120px;padding-top:10px;">
+					<div style="text-align:center;"><img src="{{baseUrl + videoResponse.profile_pic}}" height="90" style="border-radius:60px;"></div>
+					<div style="text-align:center;" class="bn-profile-title">{{videoResponse.display_name}}</div>
+				</div>
+				
+				
+					
+				<div class="bn-dashboard-user-vertbar">				
+					<!-- <img src="img/v2/cap-challenges.jpg" width="120">50&nbsp;|&nbsp;<img src="img/v2/cap-feedbacks.jpg" width="120">20 -->
+					<i class="fa fa-video-camera" aria-hidden="true" style="color:#000000;padding-right:10px;"></i>
+					<span class="bn-dashboard-vertbar-cap">Challenges:</span> {{challenges}} &nbsp;&nbsp;|&nbsp;&nbsp; 
+					<i class="fa fa-dollar" aria-hidden="true" style="color:#000000;padding-right:10px;"></i> 
+					<span class="bn-dashboard-vertbar-cap">Feedbacks:</span> {{badges}}
+				</div>
+				
+				<div ng-if="hide==false" style="height:20px;text-align:center;padding-top:0px;position:relative;">
+					<div class="bn-dashboard-profile-btn" style="position:absolute;top:-7px;left: calc(50% - 75px);background-color:#3b7f7b;color:white;"  ng-click="recordMessage(videoResponse.video_user_id);">Message</div>
+				</div>
+				
+				<div style="height:275px;text-align:center;padding-top:0px;">
+					<video id='challenge-video-player' class="video-container-player" poster='img/v2/video-placeholder.jpg' src='{{videoUrl}}' controls='true' video-ended video-loaded></video>	
+				</div>
+				
+				<div ng-if="hide==true" style="height:20px;text-align:center;padding-top:0px;position:relative;">
+					<div class="bn-dashboard-profile-btn" style="position:absolute;top:0px;left: calc(50% - 75px);background-color:#f9cc2e;color:#000000;"  ng-click="startCapture();">Feedback</div>
+				</div>
+				
+			
+		</div>

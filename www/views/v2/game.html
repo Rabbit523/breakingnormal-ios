@@ -1,0 +1,349 @@
+	<style>
+		body{
+			background-color:white;
+			margin:0px;
+			padding:0px;
+			font-family:Serif;
+		}
+
+		h1{
+			font-size:20px;
+			color:maroon;
+			font-weight:bold;
+			text-decoration:underline;
+		}
+
+		ul li{
+			padding-bottom:20px;
+		}
+
+		.main-wrapper{
+			width:280px;
+			background-color:white;
+			min-height:450px;
+			background:url('img/texture1.jpg');
+			border:5px solid #000000;
+			border-radius:10px;
+			position:absolute;
+			left:50%;
+			top:50%;
+			transform:translateY(-50%) translateX(-50%);
+			margin-top:30px;
+		}
+
+		.main-wrapper-guidelines{
+			width:100%;
+			max-width:450px;
+			background-color:white;
+			min-height:500px;
+			background:url('img/texture1.jpg');
+			padding-bottom:20px;
+			margin-right:auto;
+			margin-left:auto;
+		}
+	
+	</style>
+	<div class="main-wrapper">
+	
+		<div style="font-size:25px;color:black;padding:20px 10px 0px 10px;text-align:center;height:90px;">
+			<p style="margin:0px;color:maroon;font-weight:bold;font-size:0.9em;" id='question'></p>
+		</div>
+		
+		<div style="padding-bottom:20px;">
+			<div style="width:70px;margin:0px auto;">
+				<img id="question_action_img" src='img/refresh1.png' style='width:70px;'/>
+			</div>		
+			<div style="font-size:20px;color:black;text-align:center;font-weight:bold;" id="question_action">
+					Loading...
+			</div>
+		</div>
+		
+		<div style="padding-top:10px;padding-bottom:10px;">
+			<div id='hourglass' style="width:40px;margin:0 auto;">		
+				<img src='img/hourglass1.png' style="width:40px;"> 
+			</div>
+			
+			<div id='timer' style="font-size:60px;color:brown;text-align:center;vertical-align:top;">				
+					29s
+			</div>
+			
+			<div id='questionmaster-timer' style="font-size:60px;color:red;text-align:center;vertical-align:top;display:none;">				
+					10s
+			</div>
+			
+			<div style="font-size:10px;font-weight:bold;color:brown;text-align:center;vertical-align:top;margin-top:10px;">				
+					TOTAL GAME TIME:
+			</div>
+			
+			<div id='game-timer' style="font-size:20px;font-weight:bold;color:brown;text-align:center;vertical-align:top;">				
+					00:00
+			</div>
+			
+		</div>
+		
+		<div style="font-size:13px;color:black;text-align:center;height:30px;width:100px;margin-top:15px;" onClick="window.location='#dashboard';">
+				<div style='float:left;padding-left:15px;padding-top:5px;'><img src="img/close.png" height=20/></div>
+				<div style='float:left;padding-top:7px;padding-left:7px;font-weight:bold;'>CLOSE</div>
+		</div>
+		
+		<!--
+		<div style="width:95%;height:20px;font-size:12px;font-weight:bold;text-align:right;">
+			<img src='img/unmute.png' style='height:25px;'>
+		</div>
+		-->
+		
+	</div>
+
+	
+	<audio id="audio" src="sounds/fail1.aac" autostart="false" ></audio>
+	<script>
+		
+		var tmrGame;
+		var tmrQuestion;
+		var tmrQuestionMaster;
+		var tmrHG;
+		
+		function startGameTimer(intMins){
+			var intSecs=60;
+			//var intMins=29;
+			tmrGame = setInterval(function(){
+				intSecs--;
+				if(intSecs > 0){
+					document.getElementById('game-timer').innerHTML = intMins + ":" +intSecs + "";
+				}
+				if((intSecs == 0) || (intSecs < 0)){
+					intMins--;	
+					intSecs=60;
+				}
+				if(intMins < 0){
+					clearInterval(tmrGame);
+					window.location="#dashboard";
+				}
+			},1000);			
+		}
+	
+		function startTimer(intT){
+			//var intT=30;
+			var tmrPause;
+			tmrQuestion = setInterval(function(){
+				intT--;
+				if(intT > 0){
+					document.getElementById('timer').innerHTML = intT + "s";
+				}
+				if(intT == 0){
+				
+					var intRnd = Math.floor((Math.random() * 6) + 1);
+					var sound = document.getElementById("audio");
+					sound.src="sounds/fail"+intRnd+'.aac';
+					sound.play();
+					
+					document.getElementById('timer').innerHTML = '-';
+					
+					tmrPause = setTimeout(function(){
+						refreshQuestion();
+					},4000);
+					//clearInterval(tmrQuestion);
+					
+				}
+			},1000);
+		}	
+		
+		function startQuestionMasterTimer(){
+			var intT=10;
+			$('#questionmaster-timer').show();
+			$('#timer').hide();
+			tmrQuestionMaster = setInterval(function(){
+				intT--;
+				if(intT > 0){
+					document.getElementById('questionmaster-timer').innerHTML = intT + "s";
+				}
+				if(intT == 0){
+					$('#questionmaster-timer').hide();
+					$('#timer').show();
+					clearInterval(tmrQuestionMaster);					
+				}
+			},1000);
+		}	
+	</script>
+	
+	<script>
+	
+	var arrQuestions;
+	var intCurrentQ=0;
+	var arrPlayers;
+	var intPlayersCount=0;
+	var intCurrentPlayer=0;
+	var strLastPlayer="";
+	var strCurrentPlayer="";
+	
+	function shuffle(a) {
+		var j, x, i;
+		for (i = a.length - 1; i > 0; i--) {
+			j = Math.floor(Math.random() * (i + 1));
+			x = a[i];
+			a[i] = a[j];
+			a[j] = x;
+		}
+	}
+	
+	$(document).ready(function () {
+	
+		//clear intervals
+		clearInterval(tmrQuestion);
+		clearInterval(tmrQuestionMaster);
+		clearInterval(tmrGame);
+		//clearInterval(tmrHG);	
+	
+		/*
+		tmrHG = setInterval(function(){		
+			AnimateRotate(360);
+		},4000);
+		*/
+		
+		//Get Questions data
+		//connect to webservice
+		/*
+		$.getJSON("http://tribedesigner.online/thegame/data-service.php", function(result){	
+				arrQuestions = result;
+				startGameTimer();
+				refreshQuestion();				
+		});
+		*/
+		
+		$.getJSON("http://nad.as/thegame/data_dynamic.php", function(result){	
+				arrQuestions = result;
+				//shuffle(arrQuestions);
+				startGameTimer(window.localStorage.getItem("gametime"));
+				refreshQuestion();				
+		});
+		
+		
+		arrPlayers = JSON.parse(window.localStorage.getItem("players"));
+		intPlayersCount = arrPlayers.length;
+		//alert(arrPlayers[0]);
+		
+		
+	});
+	
+	function refreshQuestion(){
+		var intTimerInterval=30;
+		var strAction="";
+		
+		var result = arrQuestions[intCurrentQ];
+		intCurrentQ++;
+		
+		if(intCurrentQ > 50){
+			intCurrentQ=0;
+		}
+		
+		var strQuestion = decodeURIComponent(result.text).replace(/\+/g, ' ');
+		document.getElementById('question').innerHTML = strQuestion;	
+		//document.getElementById('question_action').innerHTML = result.action;
+		//result.action='PASS ON';
+		
+		if(result.action=='ACT'){
+			document.getElementById('question_action_img').src= "img/act.png";
+			document.getElementById('question_action').innerHTML = "EMBODY<span style='font-size:14px;'>(Charades Style)</span>";
+			strAction="Embody it.";
+		}
+		if(result.action=='SING'){
+			document.getElementById('question_action_img').src= "img/sing.png";
+			document.getElementById('question_action').innerHTML = "SING";
+			strAction="Sing it.";
+		}
+		if(result.action=='SPEAK'){
+			document.getElementById('question_action_img').src= "img/speak.png";
+			document.getElementById('question_action').innerHTML = "SPEAK";
+			strAction="Speak it.";
+		}				
+		if(result.action=='PASS ON'){
+			document.getElementById('question_action_img').src= "img/questionmaster.png";
+			document.getElementById('question_action').innerHTML = "QUESTION MASTER";
+			document.getElementById('question').innerHTML = "<BR/>Ask a Question";
+			intTimerInterval=40;
+			strQuestion = "Question Master";
+			strAction="Ask a Question.";
+		}
+		
+		//embed player name
+		//randomize players
+		/*
+		shuffle(arrPlayers);
+		if(strLastPlayer == arrPlayers[0]){
+			strCurrentPlayer = arrPlayers[1];
+		}else{
+			strCurrentPlayer = arrPlayers[0];
+		}
+		*/
+
+		if(intCurrentPlayer==intPlayersCount){
+			intCurrentPlayer=0;
+			shuffle(arrPlayers);
+			if(strLastPlayer==arrPlayers[0]){
+				intCurrentPlayer=1;				
+			}
+			strCurrentPlayer = arrPlayers[intCurrentPlayer];
+			intCurrentPlayer++;	
+		}else{
+			strCurrentPlayer = arrPlayers[intCurrentPlayer];
+			intCurrentPlayer++;				
+		}
+		
+		strQuestion  = strCurrentPlayer + ", " + strQuestion;
+		strLastPlayer = strCurrentPlayer;
+		
+		document.getElementById('question').innerHTML = strQuestion;
+		
+
+		//embed action
+		strQuestion = strQuestion.replace(/\?/g, '.');
+		strQuestion  = strQuestion + " " +strAction;
+		
+		//change question for narration - Question Master
+		if(result.action=='PASS ON'){
+			var strQuestionMasterPlayer ="";
+			if (strCurrentPlayer==arrPlayers[0]){
+				strQuestionMasterPlayer =arrPlayers[1];
+			}else{
+				strQuestionMasterPlayer =arrPlayers[0];
+			}
+			strQuestion = strCurrentPlayer + ", " + "ask any question to "+ strQuestionMasterPlayer +" in 10 seconds or less.";
+			document.getElementById('question').innerHTML = strQuestion;
+		}
+		
+		//speak sample text
+		try{
+			//TTS.speak({text: strQuestion, locale: 'en-GB', rate: 1}, function () {
+				//alert('success');
+			clearInterval(tmrQuestion);
+			startTimer(intTimerInterval);
+			if(result.action=='PASS ON'){
+				startQuestionMasterTimer();
+			}
+			}, function (reason) {
+				//alert(reason);
+			});
+		}catch(err){
+			clearInterval(tmrQuestion);
+			startTimer(intTimerInterval);
+			if(result.action=='PASS ON'){
+				startQuestionMasterTimer();
+			}			
+			//alert(strQuestion);
+		}
+	}
+	
+	function AnimateRotate(d){
+		var elem = $("#hourglass");
+
+		$({deg: 0}).animate({deg: d}, {
+			duration: 2000,
+			step: function(now){
+				elem.css({
+					 transform: "rotate(" + now + "deg)"
+				});
+			}
+		});
+	}	
+	</script>
+	

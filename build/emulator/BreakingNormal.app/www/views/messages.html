@@ -1,0 +1,98 @@
+	<div class="view-container-wm">
+			
+		<style>
+		.tabs-container{
+			width:100%;
+			height:50px;
+			padding-top:15px;
+		}	
+		.tabs-item{
+			float:left;
+			width:50%;
+			height:100%;
+			background-color:#dadada;
+			border-top:0px;
+			border-right:0px;
+			border-left:0px;
+			border-bottom:1px solid #767474;
+			border-top-right-radius:10px;
+			border-top-left-radius:10px;
+			color:black;
+			font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size:12px;
+			font-weight:bold;
+			text-align:center;
+			line-height:50px;
+		}
+		.tabs-left{
+			border-left:0px !important;
+		}
+		.tabs-right{
+			border-right:0px !important;
+		}
+		.tabs-selected{
+			width:calc(50% - 2px);
+			background-color:white;
+			border-top:1px solid #767474;
+			border-right:1px solid #767474;
+			border-left:1px solid #767474;
+			border-bottom:0px;
+		}
+		</style>
+			
+		<div class="tabs-container" style="">
+			<div class="tabs-item tabs-selected tabs-left" onClick="showTab(this, 1);">
+				INBOX
+			</div>
+			<div class="tabs-item tabs-right"  onClick="showTab(this, 2);">
+				OUTBOX
+			</div>
+		</div>
+		
+		
+		<div class='video-responses-container'>
+			
+			<div class="tabs-content" id="tab-1">
+			
+				<p ng-if="hasMessages==0" style="text-align:center;">
+				 You have 0 messages.
+				</p>
+				
+				
+				<div class='tribe-item' ng-repeat="message in messages" ng-click="gotoMessage(message.user_video_id, 1);">
+					<img src='{{message.profile_pic}}'>
+					<div class="tribe-item-displayname">{{message.display_name}}</div>
+					<div style="margin-top:18px;">{{message.date_created}}</div>
+				</div>
+			
+			</div>
+			
+			<div class="tabs-content" id="tab-2" style="display:none;">
+				
+				<p ng-if="hasOutboxMessages==0" style="text-align:center;">
+					You have 0 outbox messages.
+				</p>
+				
+				
+				<div class='tribe-item' ng-repeat="messageOutbox in messagesOutbox" ng-click="gotoMessage(messageOutbox.user_video_id, 0);">
+					<img src='{{messageOutbox.profile_pic}}'>
+					<div class="tribe-item-displayname">{{messageOutbox.display_name}}</div>
+					<div style="margin-top:18px;">{{messageOutbox.date_created}}</div>
+				</div>
+				
+			</div>
+			
+			
+		</div>
+			
+	</div>
+	
+	<script>
+		function showTab(objTab, id){
+			jQuery('.tabs-item').removeClass('tabs-selected');
+			jQuery(objTab).addClass('tabs-selected');
+			jQuery('.tabs-content').hide();
+			jQuery('#tab-'+id).show();
+		}
+	</script>
+	
